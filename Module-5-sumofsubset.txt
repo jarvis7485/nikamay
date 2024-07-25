@@ -1,0 +1,59 @@
+package daa_sea;
+import java.util.Scanner;
+
+public class LP17_SumOfSubSubset
+{
+	static int count=0;
+	static void subset(int cs,int k,int r,int x[],int w[],int d)
+	{
+		x[k]=1;
+		int n=w.length;
+		
+		if(cs+w[k]==d)
+		{
+			count++;
+			System.out.print("Solution "+count+": is {");
+			for(int i=0;i<n;i++)
+			{
+				if(x[i]==1)
+				{
+					System.out.print(w[i]+", ");
+				}
+			}
+			System.out.print("}\n");
+		}
+		else if((cs+w[k]+w[k+1])<=d)
+		{
+			subset(cs+w[k],k+1,r-w[k],x,w,d);
+		}
+		if((cs+r-w[k])>=d && cs+w[k+1]<=d)
+		{
+			x[k]=0;
+			subset(cs,k+1,r-w[k],x,w,d);
+		}
+	}
+	public static void main(String args[])
+	{
+		Scanner sc=new Scanner(System.in);
+		
+		int n,d,sum=0;
+		System.out.println("Enter the number of elements in the set: ");
+		n=sc.nextInt();
+		int w[]=new int[n];
+		int x[]=new int[n];
+		System.out.println("Enter the elements: ");
+		for(int i=0;i<n;i++)
+		{
+			w[i]=sc.nextInt();
+		}
+		System.out.println("Enter the desired sum: ");
+		d=sc.nextInt();
+		for(int i=0;i<n;i++)
+		{
+			x[i]=0;
+			sum+=w[i];
+		}
+		System.out.println("Sum is: "+sum);
+		subset(0,0,sum,x,w,d);
+	}
+}

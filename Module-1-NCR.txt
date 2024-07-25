@@ -1,0 +1,22 @@
+import java.util.Scanner
+public class NCR
+{
+	static int fact(int x)
+	{
+		if(x==0||x==1)
+			return 1;
+		else
+			return (x*fact(x-1));
+	}
+	public static void main(String args[])
+	{
+		int n,r,res;
+		Scanner sc=new Scanner(System.in);
+		System.out.print("Enter number of items to choose from: ");
+		n=sc.nextInt();
+		System.out.print("Enter number of items to be chosen: ");
+		r=sc.nextInt();
+		res=fact(n)/(fact(n-r)*fact(r));
+		System.out.print("No of ways: "+res);
+	}
+}

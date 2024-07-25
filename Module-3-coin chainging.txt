@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class Coinchange{
+
+    // Function to find the minimum number of coins needed
+    // to make up the given amount using the provided denominations
+    public static int minCoins(int[] coins, int amount) {
+        // Create an array to store the minimum number of coins needed for each amount
+        int[] dp = new int[amount + 1];
+        Arrays.fill(dp, Integer.MAX_VALUE); // Initialize with a large value
+
+        // Base case
+        dp[0] = 0; // 0 coins are needed to make amount 0
+
+        // Compute minimum coins required for all amounts from 1 to amount
+        for (int i = 1; i <= amount; i++) {
+            for (int coin : coins) {
+                if (coin <= i && dp[i - coin] != Integer.MAX_VALUE) {
+                    dp[i] = Math.min(dp[i], dp[i - coin] + 1);
+                }
+            }
+        }
+
+        // dp[amount] will contain the minimum number of coins needed for the given amount
+        return dp[amount];
+    }
+
+    public static void main(String[] args) {
+        Scanner sc=new Scanner(System.in);
+        int n;
+        System.out.println("Enter the number of coins");
+        n=sc.nextInt();
+        int coins[]=new int[n];
+        System.out.println("Enter the coins");
+        for(int i=0;i<n;i++)
+            coins[i]=sc.nextInt();
+        int amount;
+        System.out.println("Enter the amount to be given:");
+        amount=sc.nextInt(); 
+        int minCoinsRequired = minCoins(coins, amount);
+        System.out.println("Minimum coins required to make " + amount + " rupees: " + minCoinsRequired);
+    }
+}

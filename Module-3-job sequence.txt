@@ -1,0 +1,80 @@
+package q148;
+import java.util.*;
+class Job {
+    char id;
+    int deadline;
+    int profit;
+
+    public Job(char id, int deadline, int profit) {
+        this.id = id;
+        this.deadline = deadline;
+        this.profit = profit;
+    }
+}
+
+public class JobSequencingMain {
+    public static void jobSequence(List<Job> jobs) {
+       
+        Collections.sort(jobs, (a, b) -> b.profit - a.profit);
+
+     
+        int maxDeadline = Integer.MIN_VALUE;
+        for (Job job : jobs) {
+            maxDeadline = Math.max(maxDeadline, job.deadline);
+        }
+
+     
+        char[] result = new char[maxDeadline];
+        Arrays.fill(result, ' ');
+
+       
+        boolean[] slots = new boolean[maxDeadline];
+
+        // Iterate through each job and find a slot for it in result array
+        for (Job job : jobs) {
+          
+            for (int i = Math.min(maxDeadline - 1, job.deadline - 1); i >= 0; i--) {
+                if (!slots[i]) {
+                    result[i] = job.id;
+                    slots[i] = true;
+                    break;
+                }
+            }
+        }
+
+    
+        System.out.print("Job Sequence: ");
+        for (char job : result) {
+            if (job != ' ') {
+                System.out.print(job + " ");
+            }
+        }
+        System.out.println();
+    }
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+       
+        System.out.print("Enter the number of jobs:");
+        int n = sc.nextInt();
+
+        List<Job> jobs = new ArrayList<>();
+
+ 
+        for (int i = 0; i < n; i++) {
+            System.out.println("Enter details for job " + (i + 1) + ":");
+            System.out.print("ID: ");
+            char id = sc.next().charAt(0);
+            System.out.print("Deadline: ");
+            int deadline = sc.nextInt();
+            System.out.print("Profit: ");
+            int profit = sc.nextInt();
+            jobs.add(new Job(id, deadline, profit));
+        }
+
+        jobSequence(jobs);
+
+      
+    }
+}
