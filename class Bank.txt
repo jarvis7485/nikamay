@@ -1,0 +1,29 @@
+class Bank {
+    private int balance = 0;
+    
+    synchronized void deposit(int amount) {
+        balance += amount;
+        System.out.println("Deposited: " + amount);
+        notify();
+    }
+    
+    synchronized void withdraw(int amount) {
+        while(balance < amount) {
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        balance -= amount;
+        System.out.println("Withdrew: " + amount);
+    }
+    
+    public static void main(String[] args) {
+        Bank bank = new Bank();
+        
+        new Thread(() -> bank.withdraw(150)).start();
+        new Thread(() -> bank.deposit(100)).start();
+        new Thread(() -> bank.deposit(100)).start();
+    }
+}

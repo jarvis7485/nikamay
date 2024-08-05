@@ -1,0 +1,36 @@
+import java.io.*;
+
+class Student {
+    String name;
+    int age;
+    
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+    
+    public String toString() {
+        return name + "," + age;
+    }
+    
+    public static Student fromString(String str) {
+        String[] parts = str.split(",");
+        return new Student(parts[0], Integer.parseInt(parts[1]));
+    }
+}
+
+public class StudentManager {
+    public static void main(String[] args) throws IOException {
+        Student student = new Student("John", 20);
+        BufferedWriter bw = new BufferedWriter(new FileWriter("student.txt"));
+        bw.write(student.toString());
+        bw.close();
+        
+        BufferedReader br = new BufferedReader(new FileReader("student.txt"));
+        Student deserializedStudent = Student.fromString(br.readLine());
+        br.close();
+        
+        System.out.println("Name: " + deserializedStudent.name);
+        System.out.println("Age: " + deserializedStudent.age);
+    }
+}

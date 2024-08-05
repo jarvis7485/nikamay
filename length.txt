@@ -1,0 +1,9 @@
+public class StringOperations {
+    public static void main(String[] args) {
+        String str = "HelloWorld";
+        int length = str.length();
+        String secondHalf = str.substring(length / 2);
+        System.out.println("Length: " + length);
+        System.out.println("Second Half: " + secondHalf);
+    }
+}

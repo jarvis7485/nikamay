@@ -1,0 +1,29 @@
+import java.io.*;
+
+class Student implements Serializable {
+    String name;
+    int age;
+    
+    Student(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+}
+
+public class StudentManager {
+    public static void main(String[] args) throws IOException, ClassNotFoundException {
+        Student student = new Student("John", 20);
+        FileOutputStream fos = new FileOutputStream("student.dat");
+        ObjectOutputStream oos = new ObjectOutputStream(fos);
+        oos.writeObject(student);
+        oos.close();
+        
+        FileInputStream fis = new FileInputStream("student.dat");
+        ObjectInputStream ois = new ObjectInputStream(fis);
+        Student deserializedStudent = (Student) ois.readObject();
+        ois.close();
+        
+        System.out.println("Name: " + deserializedStudent.name);
+        System.out.println("Age: " + deserializedStudent.age);
+    }
+}

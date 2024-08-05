@@ -1,0 +1,11 @@
+public class Percentage {
+    public static void main(String[] args) {
+        int[] marks = {85, 90, 78, 88, 76, 95};
+        int total = 0;
+        for(int mark : marks) {
+            total += mark;
+        }
+        double percentage = (total / 600.0) * 100;
+        System.out.println("Percentage: " + percentage);
+    }
+}

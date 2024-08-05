@@ -1,0 +1,68 @@
+import java.util.Random;
+
+class RandomNumberThread extends Thread {
+    public void run() {
+        Random random = new Random();
+        while(true) {
+            int num = random.nextInt(100);
+            System.out.println("Generated Number: " + num);
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+class SquareThread extends Thread {
+    private RandomNumberThread randomThread;
+    
+    SquareThread(RandomNumberThread randomThread) {
+        this.randomThread = randomThread;
+    }
+    
+    public void run() {
+        while(true) {
+            int num = randomThread.num;
+            System.out.println("Square: " + (num * num));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+class CubeThread extends Thread {
+    private RandomNumberThread randomThread;
+    
+    CubeThread(RandomNumberThread randomThread) {
+        this.randomThread = randomThread;
+    }
+    
+    public void run() {
+        while(true) {
+            int num = randomThread.num;
+            System.out.println("Cube: " + (num * num * num));
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+}
+
+public class MultiThreadApp {
+    public static void main(String[] args) {
+        RandomNumberThread randomThread = new RandomNumberThread();
+        SquareThread squareThread = new SquareThread(randomThread);
+        CubeThread cubeThread = new CubeThread(randomThread);
+        
+        randomThread.start();
+        squareThread.start();
+        cubeThread.start();
+    }
+}
